@@ -11,14 +11,19 @@ class LoginPage extends StatefulWidget{
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  TextEditingController loginController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final loginField = TextField(
-      obscureText: true,
+      obscureText: false,
       style: style,
+      controller: loginController,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xffEEEEEE),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Логин',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
@@ -26,9 +31,12 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final passeorField = TextField(
+      controller: passwordController,
       obscureText: true,
       style: style,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Color(0xffEEEEEE),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Пароль',
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
@@ -38,11 +46,11 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(15),
-      color: Color(0xff01A0C7),
+      color: Color(0xffbf2038),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: null,
+        onPressed: ()=> print('Логин: ${loginController.text}  | Пароль: ${passwordController.text}'),
         child: Text("Войти",
         textAlign: TextAlign.center,
         style: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
@@ -54,19 +62,19 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            color: Colors.white,
+            //color: Colors.blueAccent,
             child: Padding(
-              padding: EdgeInsets.all(35),
+              padding: EdgeInsets.all(50),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(
-                    height: 155,
+                    height: 150,
                     child: Image.asset('assets/images/logo.png', fit: BoxFit.contain,),
                   ),
                   SizedBox(
-                    height: 45,
+                    height: 100,
                   ),
                   loginField,
                   SizedBox(height: 25,),
@@ -80,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
+      backgroundColor: Color(0xff17325c),
     );
   }
 }
