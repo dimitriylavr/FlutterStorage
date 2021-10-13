@@ -19,13 +19,18 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> _fetchData() async {
     final response = await http.get(Uri.parse(baseUrl));
-    //print(response);
     final data = json.decode(response.body)['records'];
-    print(data);
+    //print(data);
 
     setState(() {
       _loadPhotos = data;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
   }
 
   @override
