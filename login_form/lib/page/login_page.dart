@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
         fillColor: Color(0xffEEEEEE),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Логин',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
@@ -39,13 +39,13 @@ class _LoginPageState extends State<LoginPage> {
         fillColor: Color(0xffEEEEEE),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         hintText: 'Пароль',
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
       ),
     );
 
     final loginButton = Material(
       elevation: 5,
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(10),
       color: Color(0xffbf2038),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
