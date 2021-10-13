@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:login_form/const/color.dart';
+import 'package:login_form/const/config.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = "/mainPage";
@@ -16,10 +17,12 @@ class _MainPageState extends State<MainPage> {
   List _loadPhotos = [];
 
   Future<void> _fetchData() async {
-    const API_URL = 'https://jsonplaceholder.typicode.com/photos';
 
-    final response = await http.get(Uri.parse(API_URL));
-    final data = json.decode(response.body);
+
+    final response = await http.get(Uri.parse(baseUrl));
+    //print(response);
+    final data = json.decode(response.body)['records'];
+    print(data);
 
     setState(() {
       _loadPhotos = data;
@@ -44,14 +47,29 @@ class _MainPageState extends State<MainPage> {
               : ListView.builder(
                   itemCount: _loadPhotos.length,
                   itemBuilder: (BuildContext ctx, index) {
-                    return ListTile(
-                      leading: Image.network(
-                        _loadPhotos[index]["thumbnailUrl"],
-                        width: 150,
-                        fit: BoxFit.cover,
+                    return Card(
+                      color: Colors.white,
+                      elevation: 10,
+                      margin: EdgeInsets.symmetric(vertical: 5),
+                      child: ListTile(
+                        leading:
+                        Image.network('https://via.placeholder.com/150/92c952',
+                        //Image.network(_loadPhotos[index]["thumbnailUrl"],
+                          width: 150,
+                          fit: BoxFit.cover,
+                        ),
+                        title: Text(
+                          _loadPhotos[index]['name'],
+                          style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
+                        ),
+                        subtitle:
+                            Text("Телефон: ${_loadPhotos[index]["phone"]}"),
+                        trailing: IconButton(
+                          icon: Icon(Icons.arrow_forward_ios),
+                          onPressed: () => print(
+                              'Выбрали карточку: ${_loadPhotos[index]["phone"]}'),
+                        ),
                       ),
-                      title: Text(_loadPhotos[index]['title']),
-                      subtitle: Text("Photo ID: ${_loadPhotos[index]["id"]}"),
                     );
                   },
                 )),
