@@ -1,1 +1,1 @@
-const baseUrl = 'https://parts.major-truck.ru/api/user/get?token=03cc327a-e6c2-11ea-9c2d-005056a1ed37';
+const baseUrl = '';
