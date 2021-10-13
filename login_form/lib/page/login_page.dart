@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget{
-  LoginPage({Key? key, required this.title}):super(key: key);
 
-  final String title;
-
+  static const routeName = "/loginScreen";
   @override
   _LoginPageState createState()=>_LoginPageState();
 }
@@ -30,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final passeorField = TextField(
+    final passwordField = TextField(
       controller: passwordController,
       obscureText: true,
       style: style,
@@ -78,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   loginField,
                   SizedBox(height: 25,),
-                  passeorField,
+                  passwordField,
                   SizedBox(height: 35,),
                   loginButton,
                   SizedBox(height: 15,),
