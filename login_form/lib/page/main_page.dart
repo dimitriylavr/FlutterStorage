@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:login_form/const/color.dart';
 import 'package:login_form/const/config.dart';
+import 'package:login_form/page/new_main_page.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = "/mainPage";
@@ -17,8 +18,6 @@ class _MainPageState extends State<MainPage> {
   List _loadPhotos = [];
 
   Future<void> _fetchData() async {
-
-
     final response = await http.get(Uri.parse(baseUrl));
     //print(response);
     final data = json.decode(response.body)['records'];
@@ -39,40 +38,45 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
           child: _loadPhotos.length == 0
               ? Center(
-                  child: ElevatedButton(
-                    child: Text("Загрузить данные"),
-                    onPressed: _fetchData,
-                  ),
-                )
+            child: ElevatedButton(
+              child: Text("Загрузить данные"),
+              onPressed: _fetchData,
+            ),
+          )
               : ListView.builder(
-                  itemCount: _loadPhotos.length,
-                  itemBuilder: (BuildContext ctx, index) {
-                    return Card(
-                      color: Colors.white,
-                      elevation: 10,
-                      margin: EdgeInsets.symmetric(vertical: 5),
-                      child: ListTile(
-                        leading:
-                        Image.network('https://via.placeholder.com/150/92c952',
-                        //Image.network(_loadPhotos[index]["thumbnailUrl"],
-                          width: 150,
-                          fit: BoxFit.cover,
-                        ),
-                        title: Text(
-                          _loadPhotos[index]['name'],
-                          style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),
-                        ),
-                        subtitle:
-                            Text("Телефон: ${_loadPhotos[index]["phone"]}"),
-                        trailing: IconButton(
-                          icon: Icon(Icons.arrow_forward_ios),
-                          onPressed: () => print(
-                              'Выбрали карточку: ${_loadPhotos[index]["phone"]}'),
-                        ),
-                      ),
-                    );
-                  },
-                )),
+            itemCount: _loadPhotos.length,
+            itemBuilder: (BuildContext ctx, index) {
+              return Card(
+                color: Colors.white,
+                elevation: 10,
+                margin: EdgeInsets.symmetric(vertical: 5),
+                child: ListTile(
+                  leading:
+                  Image.network('https://via.placeholder.com/150/92c952',
+                    //Image.network(_loadPhotos[index]["thumbnailUrl"],
+                    width: 100,
+                    fit: BoxFit.cover,
+                  ),
+                  title: Text(
+                    _loadPhotos[index]['name'],
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
+                  ),
+                  subtitle:
+                  Text("Тел.: ${_loadPhotos[index]["phone"]}",
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),),
+                  trailing: IconButton(
+                      icon: Icon(Icons.arrow_forward_ios),
+                      onPressed: () =>
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => NewMainPage()),
+                                  (Route<dynamic> route) => false),
+                      //print('Выбрали карточку: ${_loadPhotos[index]["phone"]}'),
+                  ),
+                ),
+              );
+            },
+          )),
     );
   }
 }
