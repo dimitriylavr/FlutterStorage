@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:login_form/const/color.dart';
 import 'package:login_form/const/config.dart';
+import 'package:login_form/page/goods_page.dart';
 import 'package:login_form/page/new_main_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -43,10 +44,7 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
           child: _loadOrder.length == 0
               ? Center(
-            child: ElevatedButton(
-              child: Text("Загрузить данные"),
-              onPressed: _fetchData,
-            ),
+            child: CircularProgressIndicator(),
           )
               : ListView.builder(
             itemCount: _loadOrder.length,
@@ -74,7 +72,7 @@ class _MainPageState extends State<MainPage> {
                       onPressed: () =>
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => NewMainPage(_loadOrder[index]['id'])),
+                                  builder: (BuildContext context) => GoodsPage(_loadOrder[index]['id'], _loadOrder[index]['username'], _loadOrder[index]['userphone'])),
                                   (Route<dynamic> route) => false),
                       //print('Выбрали карточку: ${_loadPhotos[index]["phone"]}'),
                   ),
