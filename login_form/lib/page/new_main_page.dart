@@ -3,11 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:login_form/const/color.dart';
 import 'package:login_form/const/config.dart';
-import 'package:login_form/models/job.dart';
+
+//import 'package:login_form/models/job.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_form/models/order.dart';
 import 'package:login_form/page/main_page.dart';
 
 class NewMainPage extends StatefulWidget {
+  final String id;
+  const NewMainPage(this.id);
+
   static const routeName = "newMainPage";
 
   @override
@@ -15,19 +20,18 @@ class NewMainPage extends StatefulWidget {
 }
 
 class _NewMainPageState extends State<NewMainPage> {
-  List<dynamic> jobList = [];
+  List<dynamic> orderList = [];
+  List<dynamic> goodsList = [];
 
   Future<void> readJson() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    final response =
+        await http.get(Uri.parse(baseUrl + 'api/order/get?token=' + token+'&orderid='+widget.id));
     final data = await json.decode(response.body);
 
-    // final String response = await rootBundle.loadString('assets/jobs.json');
-    // final data = await json.decode(response);
-
-    //print(data);
     setState(() {
-      jobList = data['records'].map((data) => Job.fromJson(data)).toList();
+      orderList = data['records'].map((data) => Order.fromJson(data)).toList();
     });
+
   }
 
   @override
@@ -46,11 +50,12 @@ class _NewMainPageState extends State<NewMainPage> {
         leadingWidth: 20,
         toolbarHeight: 60,
         leading: IconButton(
-            padding: EdgeInsets.all(15),
-            onPressed: ()=>Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (BuildContext context) => MainPage()),
-                    (Route<dynamic> route) => false),
-            icon: Icon(
+            padding: const EdgeInsets.all(15),
+            onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => MainPage()),
+                (Route<dynamic> route) => false),
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.white,
             )),
@@ -60,7 +65,7 @@ class _NewMainPageState extends State<NewMainPage> {
             child: IconButton(
                 iconSize: 30,
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.notifications_none,
                   color: Colors.white,
                 )),
@@ -68,20 +73,21 @@ class _NewMainPageState extends State<NewMainPage> {
         ],
         title: Center(
           child: Container(
-            padding: EdgeInsets.only(left: 35),
+            padding: const EdgeInsets.only(left: 35),
             height: 40,
             child: TextField(
               cursorColor: Colors.grey,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                 filled: true,
                 fillColor: Colors.grey.shade200,
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                prefixIcon: const Icon(Icons.search, color: Colors.grey),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide.none),
-                hintText: "Поиск заявки",
-                hintStyle: TextStyle(fontSize: 16),
+                hintText: "Поиск заказа...",
+                hintStyle: const TextStyle(fontSize: 16),
               ),
             ),
           ),
@@ -89,19 +95,19 @@ class _NewMainPageState extends State<NewMainPage> {
       ),
       body: Container(
         child: ListView.builder(
-            padding: EdgeInsets.all(20),
-            itemCount: jobList.length,
+            padding: const EdgeInsets.all(20),
+            itemCount: orderList.length,
             itemBuilder: (context, index) {
-              return jobComponent(job: jobList[index]);
+              return orderComponent(order: orderList[index]);
             }),
       ),
     );
   }
 
-  jobComponent({required Job job}) {
+  orderComponent({required Order order}) {
     return Container(
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
@@ -133,16 +139,16 @@ class _NewMainPageState extends State<NewMainPage> {
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(job.name,
-                              style: TextStyle(
+                          Text('${order.id} - ${order.username}',
+                              style: const TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Colors.black,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w500)),
-                          SizedBox(
+                          const SizedBox(
                             height: 5,
                           ),
-                          Text(job.phone,
+                          Text(order.userphone,
                               style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Colors.grey[500])),
@@ -153,7 +159,7 @@ class _NewMainPageState extends State<NewMainPage> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    job.isMyFav = !job.isMyFav;
+                    order.isMyFav = !order.isMyFav;
                   });
                 },
                 child: AnimatedContainer(
@@ -163,12 +169,12 @@ class _NewMainPageState extends State<NewMainPage> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: job.isMyFav
+                          color: order.isMyFav
                               ? Colors.red.shade100
                               : Colors.grey.shade300,
                         )),
                     child: Center(
-                        child: job.isMyFav
+                        child: order.isMyFav
                             ? Icon(
                                 Icons.add,
                                 color: Colors.red,
@@ -196,8 +202,11 @@ class _NewMainPageState extends State<NewMainPage> {
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.grey.shade200),*/
                       child: Text(
-                        job.company,
-                        style: TextStyle(color: Colors.black, fontFamily: 'Montserrat',),
+                        order.docnum,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     ),
                     //SizedBox(width: 10,),
@@ -209,14 +218,17 @@ class _NewMainPageState extends State<NewMainPage> {
                           borderRadius: BorderRadius.circular(10),
                           color: Color(0xffbf2038).withAlpha(20)),
                       child: Text(
-                        job.email,
-                        style: TextStyle(color: Color(0xffbf2038), fontFamily: 'Montserrat',),
+                        order.comment,
+                        style: TextStyle(
+                          color: Color(0xffbf2038),
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
                     )
                   ],
                 ),
                 Text(
-                  job.name,
+                  order.status,
                   style: TextStyle(color: Colors.grey.shade800, fontSize: 12),
                 )
               ],
