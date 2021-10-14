@@ -6,6 +6,7 @@ import 'package:login_form/const/config.dart';
 
 //import 'package:login_form/models/job.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_form/models/goods.dart';
 import 'package:login_form/models/order.dart';
 import 'package:login_form/page/main_page.dart';
 
@@ -30,6 +31,7 @@ class _NewMainPageState extends State<NewMainPage> {
 
     setState(() {
       orderList = data['records'].map((data) => Order.fromJson(data)).toList();
+      goodsList = data['records']['goods'].map((data) => Goods.fromJson(data)).toList();
     });
 
   }
