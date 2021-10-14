@@ -15,15 +15,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List _loadPhotos = [];
+  List _loadOrder = [];
 
   Future<void> _fetchData() async {
-    final response = await http.get(Uri.parse(baseUrl));
+    final response = await http.get(Uri.parse(baseUrl+'api/order/get?token='+token));
     final data = json.decode(response.body)['records'];
     //print(data);
 
     setState(() {
-      _loadPhotos = data;
+      _loadOrder = data;
     });
   }
 
@@ -41,7 +41,7 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: mainColor,
       ),
       body: SafeArea(
-          child: _loadPhotos.length == 0
+          child: _loadOrder.length == 0
               ? Center(
             child: ElevatedButton(
               child: Text("Загрузить данные"),
@@ -49,7 +49,7 @@ class _MainPageState extends State<MainPage> {
             ),
           )
               : ListView.builder(
-            itemCount: _loadPhotos.length,
+            itemCount: _loadOrder.length,
             itemBuilder: (BuildContext ctx, index) {
               return Card(
                 color: Colors.white,
@@ -63,18 +63,18 @@ class _MainPageState extends State<MainPage> {
                     fit: BoxFit.cover,
                   ),
                   title: Text(
-                    _loadPhotos[index]['name'],
-                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 20),
+                    '#${_loadOrder[index]['id']} - ${_loadOrder[index]['username']}',
+                    style: TextStyle(fontFamily: 'Montserrat', fontSize: 18),
                   ),
                   subtitle:
-                  Text("Тел.: ${_loadPhotos[index]["phone"]}",
+                  Text("Тел.: ${_loadOrder[index]["userphone"]}",
                     style: TextStyle(fontFamily: 'Montserrat', fontSize: 16),),
                   trailing: IconButton(
                       icon: Icon(Icons.arrow_forward_ios),
                       onPressed: () =>
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                  builder: (BuildContext context) => NewMainPage()),
+                                  builder: (BuildContext context) => NewMainPage(_loadOrder[index]['id'])),
                                   (Route<dynamic> route) => false),
                       //print('Выбрали карточку: ${_loadPhotos[index]["phone"]}'),
                   ),
