@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_form/const/color.dart';
 import 'package:login_form/const/config.dart';
 import 'package:login_form/models/goods.dart';
 import 'package:login_form/models/order.dart';
@@ -18,7 +19,6 @@ class GoodsPage extends StatefulWidget {
 
   @override
   _GoodsPageState createState() => _GoodsPageState();
-
 }
 
 class _GoodsPageState extends State<GoodsPage> {
@@ -26,8 +26,7 @@ class _GoodsPageState extends State<GoodsPage> {
   List<dynamic> goodsList = [];
 
   Future<void> readJson() async {
-    final response =
-    await http.get(Uri.parse(
+    final response = await http.get(Uri.parse(
         baseUrl + 'api/order/get?token=' + token + '&orderid=' + widget.id));
     final data = await json.decode(response.body);
 
@@ -51,8 +50,8 @@ class _GoodsPageState extends State<GoodsPage> {
         children: <Widget>[
           Container(
             height: 200,
-            decoration: BoxDecoration(
-              color: Color(0XFF00B1FF),
+            decoration: const BoxDecoration(
+              color: mainColor,
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(40),
                   bottomRight: Radius.circular(40)),
@@ -67,11 +66,12 @@ class _GoodsPageState extends State<GoodsPage> {
                       IconButton(
                           icon: Icon(Icons.arrow_back_ios_new),
                           color: Colors.white,
-                          onPressed: () =>
-                              Navigator.of(context).pushAndRemoveUntil(
+                          onPressed: () => Navigator.of(context)
+                              .pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (BuildContext context) => MainPage()),
-                                      (Route<dynamic> route) => false)),
+                                      builder: (BuildContext context) =>
+                                          MainPage()),
+                                  (Route<dynamic> route) => false)),
                       IconButton(
                           icon: Icon(Icons.search_sharp),
                           color: Colors.white,
@@ -161,14 +161,14 @@ class _GoodsPageState extends State<GoodsPage> {
                             fontFamily: 'Montserrat',
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Color(0XFF2A2A2A),
+                            color: mainColor,
                           ),
                         ),
                         Container(
-                          width: 124,
-                          height: 1,
+                          width: 159,
+                          height: 0.5,
                           margin: EdgeInsets.only(top: 16),
-                          color: Color(0XFF707070),
+                          color: mainColor,
                         )
                       ],
                     ),
@@ -179,8 +179,7 @@ class _GoodsPageState extends State<GoodsPage> {
                           itemCount: goodsList.length,
                           itemBuilder: (context, index) {
                             return orderComponent(goods: goodsList[index]);
-                          }
-                      ),
+                          }),
                     )
                   ],
                 ),
@@ -196,26 +195,29 @@ class _GoodsPageState extends State<GoodsPage> {
     return Container(
       padding: EdgeInsets.only(bottom: 24),
       child: Row(
-        mainAxisAlignment:
-        MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Image.network('https://via.placeholder.com/150/92c952', width: 50,),
+          Image.network(
+            'https://via.placeholder.com/150/92c952',
+            width: 50,
+          ),
           Column(
-            crossAxisAlignment:
-            CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Text('${goods.name}',
-                style: TextStyle(
+              Text(
+                '${goods.name}',
+                style: const TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Color(0XFF2A2A2A),
                 ),
               ),
-              Padding(
-                padding:
-                EdgeInsets.only(top: 4, bottom: 4),
-                child: Text('Код'),
+              const Padding(
+                padding: EdgeInsets.only(top: 4, bottom: 4),
+                child: Text(
+                    '{goods.code}'
+                ),
               ),
               Container(
                 width: 130,
@@ -240,27 +242,22 @@ class _GoodsPageState extends State<GoodsPage> {
               height: 30,
               decoration: BoxDecoration(
                   color: Color(0XFF00D99E),
-                  borderRadius:
-                  BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
                       blurRadius: 8,
                       offset: Offset(0, 15),
-                      color: Color(0XFF00D99E)
-                          .withOpacity(.6),
+                      color: Color(0XFF00D99E).withOpacity(.6),
                       spreadRadius: -9,
                     ),
                   ]),
               child: Row(
-                mainAxisAlignment:
-                MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     "Заказать",
                     style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        letterSpacing: 1),
+                        fontSize: 14, color: Colors.white, letterSpacing: 1),
                   ),
                 ],
               ),
