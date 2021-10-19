@@ -177,7 +177,7 @@ class _NewMainPageState extends State<NewMainPage> {
                         )),
                     child: Center(
                         child: order.isMyFav
-                            ? Icon(
+                            ? const Icon(
                                 Icons.add,
                                 color: Colors.red,
                               )
