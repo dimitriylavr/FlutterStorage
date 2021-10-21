@@ -50,14 +50,33 @@ class HomaPage extends StatelessWidget {
                 const CircleAvatar(
                   radius: 70,
                   backgroundColor: Colors.blue,
-                  foregroundImage: NetworkImage('https://www.nj.com/resizer/zovGSasCaR41h_yUGYHXbVTQW2A=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/SJGKVE5UNVESVCW7BBOHKQCZVE.jpg'),
+                  foregroundImage: NetworkImage(
+                      'https://www.nj.com/resizer/zovGSasCaR41h_yUGYHXbVTQW2A=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/SJGKVE5UNVESVCW7BBOHKQCZVE.jpg'),
                 ),
-                const SizedBox(height: 12,),
-                const InfoRow(icon: Icons.account_circle, text: 'Lucas Lorenco'),
-                const SizedBox(height: 4,),
-                InfoRow(icon: Icons.email, text: 'hello@letitcode.ru', onTap: (){_lainchUrl('mailto:hello@letitcode.ru');}),
-                const SizedBox(height: 4,),
-                InfoRow(icon: Icons.link, text: 'https://letitcode.ru', onTap: (){_lainchUrl('https://letitcode.ru');},)
+                const SizedBox(
+                  height: 12,
+                ),
+                const InfoRow(
+                    icon: Icons.account_circle, text: 'Lucas Lorenco'),
+                const SizedBox(
+                  height: 4,
+                ),
+                InfoRow(
+                    icon: Icons.email,
+                    text: 'hello@letitcode.ru',
+                    onTap: () {
+                      _launchURL('mailto:hello@letitcode.ru');
+                    }),
+                const SizedBox(
+                  height: 4,
+                ),
+                InfoRow(
+                  icon: Icons.link,
+                  text: 'https://letitcode.ru',
+                  onTap: () {
+                    _launchURL('https://letitcode.ru');
+                  },
+                )
               ],
             ),
           ),
@@ -65,37 +84,49 @@ class HomaPage extends StatelessWidget {
       ),
     );
   }
-  void _lainchUrl(String url) async=>
-      await canLaunch(url)? await launch(url):throw 'Не удалось загрузить $url';
 }
 
-class InfoRow extends StatelessWidget{
+_launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Не удалось загрузить $url';
+  }
+}
+
+class InfoRow extends StatelessWidget {
   final IconData icon;
   final String text;
   final VoidCallback? onTap;
 
-  const InfoRow({
-    Key? key,
-    required this.icon,
-    required this.text,
-    this.onTap
-}):super(key: key);
+  const InfoRow({Key? key, required this.icon, required this.text, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child:Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 30,),
-          SizedBox(width: 6,),
-          Flexible(child: Text(
+          Icon(
+            icon,
+            size: 30,
+          ),
+          SizedBox(
+            width: 6,
+          ),
+          Flexible(
+              child: Text(
             text,
-            style: TextStyle(fontSize: 16, decoration: onTap!=null?TextDecoration.underline:TextDecoration.none),
+            style: TextStyle(
+                fontSize: 16,
+                decoration: onTap != null
+                    ? TextDecoration.underline
+                    : TextDecoration.none),
           ))
         ],
-      ) ,
+      ),
     );
   }
 }
