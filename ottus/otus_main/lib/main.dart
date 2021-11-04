@@ -35,27 +35,29 @@ class _TrainAppState extends State<TrainApp> {
           backgroundColor: Colors.black,
         ),
         body: Center(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: _loading
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      LinearProgressIndicator(
-                        value: _progressValue,
+          child: Stack(
+              //padding: const EdgeInsets.all(20),
+              children: <Widget>[
+                Image(image: AssetImage('assets/images/bg.jpg')),
+                _loading
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          LinearProgressIndicator(
+                            value: _progressValue,
+                          ),
+                          Text(
+                            '${(_progressValue * 100).round()}%',
+                            style: const TextStyle(
+                                color: Colors.black, fontSize: 30),
+                          ),
+                        ],
+                      )
+                    : const Text(
+                        "Нажми кнопку для скачивания",
+                        style: TextStyle(color: Colors.black, fontSize: 20),
                       ),
-                      Text(
-                        '${(_progressValue * 100).round()}%',
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 30),
-                      ),
-                    ],
-                  )
-                : const Text(
-                    "Нажми кнопку для скачивания",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                  ),
-          ),
+              ]),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
