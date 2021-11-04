@@ -1,8 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-void main() => runApp(TrainApp());
+void main() => runApp(const TrainApp());
 
-class TrainApp extends StatelessWidget {
+class TrainApp extends StatefulWidget {
+  const TrainApp({Key? key}) : super(key: key);
+
+  @override
+  _TrainAppState createState() => _TrainAppState();
+}
+
+class _TrainAppState extends State<TrainApp> {
+  late bool _loading;
+  late double _progressValue;
+
+  @override
+  void initState() {
+    _loading = false;
+    _progressValue = 0;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,30 +36,52 @@ class TrainApp extends StatelessWidget {
         ),
         body: Center(
           child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                LinearProgressIndicator(
-                  value: 23,
-                ),
-                Text(
-                  "23%",
-                  style: TextStyle(color: Colors.black, fontSize: 30),
-                ),
-                Text(
-                  "Нажми кнопку для скачивания",
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
-              ],
-            ),
+            padding: const EdgeInsets.all(20),
+            child: _loading
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      LinearProgressIndicator(
+                        value: _progressValue,
+                      ),
+                      Text(
+                        '${(_progressValue * 100).round()}%',
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 30),
+                      ),
+                    ],
+                  )
+                : const Text(
+                    "Нажми кнопку для скачивания",
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                  ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: null,
-          child: Icon(Icons.cloud_download),
+          onPressed: () {
+            setState(() {
+              _loading = !_loading;
+              _updateProgress();
+            });
+          },
+          child: const Icon(Icons.cloud_download),
         ),
       ),
     );
+  }
+
+  void _updateProgress() {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(oneSec, (Timer t) {
+      setState(() {
+        _progressValue += 0.2;
+        if (_progressValue.toStringAsFixed(1) == '1.0') {
+          _loading = false;
+          t.cancel();
+          _progressValue = 0;
+          return;
+        }
+      });
+    });
   }
 }
