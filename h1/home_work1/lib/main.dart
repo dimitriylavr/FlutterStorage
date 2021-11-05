@@ -12,22 +12,56 @@ class CounterApp extends StatefulWidget {
 }
 
 class _CounterApp extends State<CounterApp> {
+  late int _counter;
+
+  @override
+  void initState() {
+    _counter = 51;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.lime,
         appBar: AppBar(
-          title: Text(
+          centerTitle: true,
+          title: const Text(
             "Счетчик туда-сюда",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: Center(
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Для увеличения нажми +"),
-              Text("Для уменьшения нажми -"),
+              const Text("Для увеличения нажми +"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _counter -= 1;
+                        });
+                      },
+                      icon:
+                          Image(image: AssetImage("assets/images/minus.png"))),
+                  Text(
+                    _counter.toString(),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _counter += 1;
+                        });
+                      },
+                      icon: Image(image: AssetImage("assets/images/plus.png"))),
+                ],
+              ),
+              const Text("Для уменьшения нажми -"),
             ],
           ),
         ),
