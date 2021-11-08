@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-      home: FirstHome(),
+      home: const FirstHome(),
       routes: {
         "/first": (context) => FirstHome(),
         "/second": (context) => SecondHome()
@@ -13,6 +13,8 @@ void main() {
 }
 
 class FirstHome extends StatelessWidget {
+  const FirstHome({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +36,8 @@ class FirstHome extends StatelessWidget {
 }
 
 class SecondHome extends StatelessWidget {
+  const SecondHome({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final settings = ModalRoute.of(context)!.settings.arguments as User;
@@ -55,8 +59,8 @@ class SecondHome extends StatelessWidget {
 }
 
 class User {
-  String name;
-  int age;
+  String? name;
+  int? age;
 
-  User({this.name = '', this.age = 18});
+  User({this.name, this.age});
 }
