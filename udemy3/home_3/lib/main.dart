@@ -9,8 +9,9 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.red[400],
         appBar: AppBar(
-          title: Text("Виджет погоды"),
+          title: const Text("Виджет погоды"),
           centerTitle: true,
+          backgroundColor: Colors.red[400],
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -25,34 +26,41 @@ class MyApp extends StatelessWidget {
                       color: Colors.white,
                     )),
               ),
-              SizedBox(
-                height: 30,
+              const SizedBox(
+                height: 50,
               ),
               const Text(
                 "Moscow oblast, RU",
                 style: TextStyle(color: Colors.white, fontSize: 36),
               ),
-              SizedBox(
-                height: 30,
+              const SizedBox(
+                height: 50,
               ),
               const Text(
                 "Friday, mar 20, 2021",
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
-              SizedBox(
-                height: 30,
+              const SizedBox(
+                height: 50,
               ),
               _temperatureDetails(),
-              SizedBox(
-                height: 30,
+              const SizedBox(
+                height: 50,
               ),
               _extraWeatherDetails(),
-              SizedBox(
-                height: 30,
+              const SizedBox(
+                height: 50,
               ),
-              Text(
+              const Text(
                 "7-Day weather forecast",
                 style: TextStyle(fontSize: 22, color: Colors.white),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              _bottomDetails(),
+              const SizedBox(
+                height: 50,
               ),
             ],
           ),
@@ -65,16 +73,16 @@ class MyApp extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Icons.wb_sunny,
-          color: Colors.white,
+          color: Colors.yellow,
           size: 100,
         ),
-        SizedBox(
+        const SizedBox(
           width: 20,
         ),
         Column(
-          children: [
+          children: const [
             Text(
               "14° C",
               style: TextStyle(color: Colors.white, fontSize: 44),
@@ -95,7 +103,7 @@ Row _extraWeatherDetails() {
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Column(
-        children: [
+        children: const [
           Icon(
             Icons.ac_unit,
             color: Colors.white,
@@ -115,7 +123,7 @@ Row _extraWeatherDetails() {
         ],
       ),
       Column(
-        children: [
+        children: const [
           Icon(
             Icons.ac_unit,
             color: Colors.white,
@@ -135,7 +143,7 @@ Row _extraWeatherDetails() {
         ],
       ),
       Column(
-        children: [
+        children: const [
           Icon(
             Icons.ac_unit,
             color: Colors.white,
@@ -155,5 +163,60 @@ Row _extraWeatherDetails() {
         ],
       ),
     ],
+  );
+}
+
+Container _bottomDetails() {
+  return Container(
+    height: 150,
+    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      itemExtent: 150,
+      children: [
+        _cardWidget("Friday", 6),
+        _cardWidget("Saturday", 9),
+        _cardWidget("Sunday", 15),
+        _cardWidget("Monday", 7),
+        _cardWidget("Tuesday", 10),
+        _cardWidget("Wednesday", 13),
+        _cardWidget("Thursday", 4),
+      ],
+    ),
+  );
+}
+
+Card _cardWidget(String _names, int _fore) {
+  return Card(
+    color: Colors.transparent,
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          _names,
+          style: TextStyle(fontSize: 25, color: Colors.white),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              _fore.toString(),
+              style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+            const SizedBox(
+              width: 15,
+            ),
+            Icon(
+              Icons.wb_sunny,
+              color: Colors.white,
+              size: 30,
+            ),
+          ],
+        )
+      ],
+    ),
   );
 }
