@@ -25,12 +25,16 @@ class MyApp extends StatelessWidget {
                       color: Colors.white,
                     )),
               ),
-              const Divider(),
+              SizedBox(
+                height: 30,
+              ),
               const Text(
                 "Moscow oblast, RU",
                 style: TextStyle(color: Colors.white, fontSize: 36),
               ),
-              const Divider(),
+              SizedBox(
+                height: 30,
+              ),
               const Text(
                 "Friday, mar 20, 2021",
                 style: TextStyle(color: Colors.white, fontSize: 18),
@@ -38,25 +42,17 @@ class MyApp extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.wb_sunny,
-                    color: Colors.white,
-                    size: 50,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "14° C",
-                        style: TextStyle(color: Colors.white, fontSize: 33),
-                      ),
-                      Divider(),
-                      Text("Light snow"),
-                    ],
-                  ),
-                ],
+              _temperatureDetails(),
+              SizedBox(
+                height: 30,
+              ),
+              _extraWeatherDetails(),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                "7-Day weather forecast",
+                style: TextStyle(fontSize: 22, color: Colors.white),
               ),
             ],
           ),
@@ -64,4 +60,100 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+  Row _temperatureDetails() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.wb_sunny,
+          color: Colors.white,
+          size: 100,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Column(
+          children: [
+            Text(
+              "14° C",
+              style: TextStyle(color: Colors.white, fontSize: 44),
+            ),
+            Text(
+              "Light snow",
+              style: TextStyle(color: Colors.white, fontSize: 22),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+Row _extraWeatherDetails() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Column(
+        children: [
+          Icon(
+            Icons.ac_unit,
+            color: Colors.white,
+            size: 30,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            "5",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          Text(
+            "km/h",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Icon(
+            Icons.ac_unit,
+            color: Colors.white,
+            size: 30,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            "3",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          Text(
+            "%",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ],
+      ),
+      Column(
+        children: [
+          Icon(
+            Icons.ac_unit,
+            color: Colors.white,
+            size: 30,
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Text(
+            "20",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          Text(
+            "km/h",
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+        ],
+      ),
+    ],
+  );
 }
