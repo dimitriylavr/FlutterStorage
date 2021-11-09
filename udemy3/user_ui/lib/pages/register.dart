@@ -9,6 +9,20 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPage extends State<RegisterPage> {
   bool _hidePass = true;
   bool _hideConPass = true;
+
+  final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _storyController = TextEditingController();
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _storyController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +37,9 @@ class _RegisterPage extends State<RegisterPage> {
           child: ListView(
         padding: EdgeInsets.all(15),
         children: [
-          const TextField(
-            decoration: InputDecoration(
+          TextField(
+            controller: _nameController,
+            decoration: const InputDecoration(
               labelText: "Ful name *",
               hintText: "Пиши уже что нибудь",
               prefixIcon: Icon(Icons.person),
@@ -46,6 +61,7 @@ class _RegisterPage extends State<RegisterPage> {
             height: 10,
           ),
           TextFormField(
+            controller: _phoneController,
             decoration: const InputDecoration(
               prefixIcon: Icon(Icons.phone),
               labelText: "Phone number *",
@@ -67,6 +83,7 @@ class _RegisterPage extends State<RegisterPage> {
             height: 10,
           ),
           TextFormField(
+            controller: _emailController,
             decoration: const InputDecoration(
                 labelText: "Email",
                 hintText: "Enter a email adress",
@@ -77,6 +94,7 @@ class _RegisterPage extends State<RegisterPage> {
             height: 10,
           ),
           TextFormField(
+            controller: _storyController,
             decoration: InputDecoration(
                 labelText: "Story",
                 hintText: "Расскажи о себе",
@@ -127,7 +145,9 @@ class _RegisterPage extends State<RegisterPage> {
             height: 30,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _submitForm();
+            },
             child: Text(
               "Отправить",
               style: TextStyle(color: Colors.white),
@@ -137,5 +157,12 @@ class _RegisterPage extends State<RegisterPage> {
         ],
       )),
     );
+  }
+
+  void _submitForm() {
+    print("Имя: ${_nameController.text}");
+    print("Телефон: ${_phoneController.text}");
+    print("Почта: ${_emailController.text}");
+    print("История: ${_storyController.text}");
   }
 }
