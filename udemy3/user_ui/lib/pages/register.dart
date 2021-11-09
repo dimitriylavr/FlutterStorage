@@ -18,6 +18,10 @@ class _RegisterPage extends State<RegisterPage> {
   final _storyController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPassController = TextEditingController();
+
+  List<String> _countries = ['Russia', 'Spain', 'France', 'Germany'];
+  String? _selectedCountry;
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -104,6 +108,26 @@ class _RegisterPage extends State<RegisterPage> {
               SizedBox(
                 height: 10,
               ),
+              DropdownButtonFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  icon: Icon(Icons.map),
+                  labelText: "Страна",
+                ),
+                items: _countries.map((country) {
+                  return DropdownMenuItem(child: Text(country), value: country);
+                }).toList(),
+                onChanged: (data) {
+                  print(data);
+                  setState(() {
+                    _selectedCountry = data.toString();
+                  });
+                },
+                value: _selectedCountry,
+              ),
+              SizedBox(
+                height: 10,
+              ),
               TextFormField(
                 controller: _storyController,
                 decoration: InputDecoration(
@@ -184,6 +208,7 @@ class _RegisterPage extends State<RegisterPage> {
       print("Телефон: ${_phoneController.text}");
       print("Почта: ${_emailController.text}");
       print("История: ${_storyController.text}");
+      print("Страна: ${_selectedCountry}");
     } else {
       print("Форма не заполнена");
     }
