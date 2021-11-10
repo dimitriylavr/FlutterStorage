@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:home_2/page/home.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  _MyApp createState() => _MyApp();
-}
-
-class _MyApp extends State<MyApp> {
-  @override
+class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      home: HomePage(),
+    );
   }
 }
