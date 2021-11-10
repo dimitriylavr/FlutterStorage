@@ -3,4 +3,5 @@ class User {
   late String phone;
   late String email;
   late String desc;
+  late String country;
 }
