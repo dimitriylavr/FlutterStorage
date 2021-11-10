@@ -15,9 +15,27 @@ class UserPageInfo extends StatelessWidget {
         margin: EdgeInsets.all(10),
         child: Column(
           children: [
+            //инфо
             ListTile(
+              leading: Icon(Icons.person),
               title: Text("${userInfo.name}"),
+              subtitle: Text("${userInfo.desc}"),
+              trailing: Text("${userInfo.country}"),
             ),
+            //телефон
+            !userInfo.phone.isEmpty
+                ? ListTile(
+                    leading: Icon(Icons.phone),
+                    title: Text("${userInfo.phone}"),
+                  )
+                : SizedBox(),
+            //почта
+            !userInfo.email.isEmpty
+                ? ListTile(
+                    leading: Icon(Icons.mail),
+                    title: Text("${userInfo.email}"),
+                  )
+                : SizedBox(),
           ],
         ),
       ),
