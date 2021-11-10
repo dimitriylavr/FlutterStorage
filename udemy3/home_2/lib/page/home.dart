@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:home_2/model/user.dart';
 
 class HomePage extends StatefulWidget {
   _HomePage createState() => _HomePage();
@@ -15,6 +16,8 @@ class _HomePage extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
 
   bool _hidePass = true;
+
+  User newUser = User();
 
   List<String> _country = ['Russia', 'Spain', 'France', 'Germany'];
   String _selectedCountry = 'Russia';
@@ -58,6 +61,7 @@ class _HomePage extends State<HomePage> {
               controller: _nameController,
               autofocus: true,
               validator: _validatorName,
+              onSaved: (value) => newUser.name = value!,
               decoration: InputDecoration(
                 labelText: "Ваше имя",
                 prefixIcon: Icon(
@@ -84,6 +88,7 @@ class _HomePage extends State<HomePage> {
             TextFormField(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              onSaved: (value) => newUser.phone = value!,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 labelText: "Номер телефона",
@@ -102,6 +107,7 @@ class _HomePage extends State<HomePage> {
             TextFormField(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
+              onSaved: (value) => newUser.email = value!,
               decoration: InputDecoration(
                 labelText: "Адрес почты",
                 prefixIcon: Icon(
@@ -118,6 +124,10 @@ class _HomePage extends State<HomePage> {
             //страна
             DropdownButtonFormField(
               decoration: InputDecoration(
+                prefixIcon: Icon(
+                  Icons.flag,
+                  color: Colors.blue,
+                ),
                 enabledBorder: _enabledBorder(),
               ),
               items: _country.map((country) {
@@ -129,6 +139,7 @@ class _HomePage extends State<HomePage> {
               onChanged: (country) {
                 setState(() {
                   _selectedCountry = country as String;
+                  newUser.country = _selectedCountry;
                 });
               },
               value: _selectedCountry,
@@ -141,6 +152,7 @@ class _HomePage extends State<HomePage> {
               controller: _descriptController,
               maxLines: 3,
               keyboardType: TextInputType.multiline,
+              onSaved: (value) => newUser.desc = value!,
               decoration: InputDecoration(
                 labelText: "О себе",
                 prefixIcon: Icon(
