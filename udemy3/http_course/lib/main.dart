@@ -1,45 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_course/offices.dart';
 
 void main() => runApp(MyApp());
+
+// https://about.google/static/data/locations.json
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Работа с сетью",
-      theme: ThemeData(primarySwatch: Colors.indigo),
-      home: HomePage(),
+      title: 'Flutter JSON Demo',
+      home: MyHomePage(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   @override
-  _HomePage createState() => _HomePage();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HomePage extends State<HomePage> {
+class _MyHomePageState extends State<MyHomePage> {
+  late Future<OfficesList> officesList;
+
   @override
   void initState() {
-    loadData();
     super.initState();
+    officesList = getOfficesList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Работа с сетью"),
+        title: Text('Manual JSON Serialization'),
         centerTitle: true,
       ),
-      body: Container(),
+      body: FutureBuilder<OfficesList>(
+        future: officesList,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data?.offices.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: ListTile(
+                      title: Text('${snapshot.data?.offices[index].name}'),
+                      subtitle:
+                          Text('${snapshot.data?.offices[index].address}'),
+                      leading: Image.network(
+                          '${snapshot.data?.offices[index].image}'),
+                      isThreeLine: true,
+                    ),
+                  );
+                });
+          } else if (snapshot.hasError) {
+            return Text('Error');
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
 
-Future<http.Response> getData() async {
+/*Future<http.Response> getData() async {
   const url = "https://about.google/static/data/locations.json";
   return await http.get(Uri.parse(url));
 }
@@ -55,3 +81,4 @@ void loadData() {
     debugPrint(error.toString());
   });
 }
+*/
