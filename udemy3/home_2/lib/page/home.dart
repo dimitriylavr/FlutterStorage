@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:home_2/model/user.dart';
+import 'package:home_2/page/info.dart';
 
 class HomePage extends StatefulWidget {
   _HomePage createState() => _HomePage();
@@ -210,6 +211,10 @@ class _HomePage extends State<HomePage> {
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => UserPageInfo(userInfo: newUser)));
     } else {
       print("Есть ошибки");
     }
