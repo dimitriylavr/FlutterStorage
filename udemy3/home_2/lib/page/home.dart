@@ -9,11 +9,25 @@ class _HomePage extends State<HomePage> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
-  final _countryController = TextEditingController();
   final _descriptController = TextEditingController();
   final _passController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   bool _hidePass = true;
+
+  List<String> _country = ['Russia', 'Spain', 'France', 'Germany'];
+  String _selectedCountry = 'Russia';
+
+  void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
+    _descriptController.dispose();
+    _passController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +40,7 @@ class _HomePage extends State<HomePage> {
         centerTitle: true,
       ),
       body: Form(
+        key: _formKey,
         child: ListView(
           padding: EdgeInsets.all(15),
           children: [
@@ -42,15 +57,21 @@ class _HomePage extends State<HomePage> {
             TextFormField(
               controller: _nameController,
               autofocus: true,
+              validator: _validatorName,
               decoration: InputDecoration(
                 labelText: "Ваше имя",
                 prefixIcon: Icon(
                   Icons.account_box,
                   color: Colors.blue,
                 ),
-                suffixIcon: Icon(
-                  Icons.clear,
-                  color: Colors.red,
+                suffixIcon: GestureDetector(
+                  onLongPress: () {
+                    _nameController.clear();
+                  },
+                  child: Icon(
+                    Icons.clear,
+                    color: Colors.red,
+                  ),
                 ),
                 enabledBorder: _enabledBorder(),
                 focusedBorder: _focusedBorder(),
@@ -95,13 +116,29 @@ class _HomePage extends State<HomePage> {
               height: 10,
             ),
             //страна
-            TextFormField(),
+            DropdownButtonFormField(
+              decoration: InputDecoration(
+                enabledBorder: _enabledBorder(),
+              ),
+              items: _country.map((country) {
+                return DropdownMenuItem(
+                  child: Text(country),
+                  value: country,
+                );
+              }).toList(),
+              onChanged: (country) {
+                setState(() {
+                  _selectedCountry = country as String;
+                });
+              },
+              value: _selectedCountry,
+            ),
             SizedBox(
               height: 10,
             ),
             //описание
             TextFormField(
-              controller: _countryController,
+              controller: _descriptController,
               maxLines: 3,
               keyboardType: TextInputType.multiline,
               decoration: InputDecoration(
@@ -144,15 +181,37 @@ class _HomePage extends State<HomePage> {
               height: 10,
             ),
             ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  "Зарегистрироваться",
-                  style: TextStyle(color: Colors.white),
-                ))
+              onPressed: () {
+                _submitForm();
+              },
+              child: Text(
+                "Зарегистрироваться",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    } else {
+      print("Есть ошибки");
+    }
+  }
+
+  String? _validatorName(String? value) {
+    final _nameExp = RegExp(r'^[A-Za-z ]+$');
+    if (value == null) {
+      return 'Заполните поле!';
+    } else if (!_nameExp.hasMatch(value)) {
+      return 'В имени недопустимые символы';
+    } else {
+      return null;
+    }
   }
 }
 
