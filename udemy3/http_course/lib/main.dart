@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:http_course/offices.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 // https://about.google/static/data/locations.json
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter JSON Demo',
       home: MyHomePage(),
     );
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -34,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manual JSON Serialization'),
+        title: const Text('Manual JSON Serialization'),
         centerTitle: true,
       ),
       body: FutureBuilder<OfficesList>(
@@ -56,9 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 });
           } else if (snapshot.hasError) {
-            return Text('Error');
+            return const Text('Error');
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
