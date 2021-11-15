@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slide_digital_clock/slide_digital_clock.dart';
 
 import '../../constant.dart';
 
@@ -33,12 +34,28 @@ Container TimeCard() {
       border: Border.all(color: Colors.white10),
     ),
     child: Row(
-      children: const [
+      children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-          child: Text(
-            "10:00:00",
-            style: TextStyle(fontSize: 34),
+          child: Column(
+            children: [
+              DigitalClock(
+                digitAnimationStyle: Curves.easeInOutBack,
+                is24HourTimeFormat: true,
+                areaDecoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                hourMinuteDigitDecoration: BoxDecoration(
+                  color: Colors.transparent,
+                ),
+                hourMinuteDigitTextStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 50,
+                ),
+                secondDigitTextStyle:
+                    TextStyle(fontSize: 50, fontWeight: FontWeight.w200),
+              ),
+            ],
           ),
         )
       ],
