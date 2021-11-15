@@ -15,12 +15,12 @@ class Header extends StatelessWidget {
           "images/logo.png",
           width: 250,
         ),
-        Spacer(flex: 2),
-        Text(
+        const Spacer(flex: 2),
+        const Text(
           "Приемка",
           style: TextStyle(fontSize: 50),
         ),
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
         TimeCard(context),
       ],
     );
@@ -45,28 +45,28 @@ Container TimeCard(context) {
     child: Row(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+          padding: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
           child: Column(
             children: [
               Text(
                 formatter,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
               ),
               DigitalClock(
                 digitAnimationStyle: Curves.easeInOutBack,
                 is24HourTimeFormat: true,
-                areaDecoration: BoxDecoration(
+                areaDecoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
-                hourMinuteDigitDecoration: BoxDecoration(
+                hourMinuteDigitDecoration: const BoxDecoration(
                   color: Colors.transparent,
                 ),
-                hourMinuteDigitTextStyle: TextStyle(
+                hourMinuteDigitTextStyle: const TextStyle(
                   color: Colors.white,
                   fontSize: 35,
                 ),
                 secondDigitTextStyle:
-                    TextStyle(fontSize: 35, fontWeight: FontWeight.w200),
+                    const TextStyle(fontSize: 35, fontWeight: FontWeight.w200),
               ),
             ],
           ),
