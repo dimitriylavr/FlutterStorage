@@ -15,23 +15,20 @@ class MonitorTable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "Приёмка",
-            style: TextStyle(color: mainColor, fontSize: 30),
-          ),
           SizedBox(
             width: double.infinity,
             child: DataTable2(
               columnSpacing: defaultPadding,
               minWidth: 600,
               dataRowHeight: 75,
+              showBottomBorder: true,
               columns: [
-                DataColumn(label: Text("Фото", style: txtStyle())),
-                DataColumn(label: Text("Время", style: txtStyle())),
-                DataColumn(label: Text("Модель", style: txtStyle())),
-                DataColumn(label: Text("Номер", style: txtStyle())),
-                DataColumn(label: Text("Заказчик", style: txtStyle())),
-                DataColumn(label: Text("Статус", style: txtStyle())),
+                DataColumn(label: Text("Фото", style: txtStyleHeader())),
+                DataColumn(label: Text("Время", style: txtStyleHeader())),
+                DataColumn(label: Text("Модель", style: txtStyleHeader())),
+                DataColumn(label: Text("Номер", style: txtStyleHeader())),
+                DataColumn(label: Text("Заказчик", style: txtStyleHeader())),
+                DataColumn(label: Text("Статус", style: txtStyleHeader())),
               ],
               rows: List<DataRow>.generate(
                 10,
@@ -68,6 +65,10 @@ class MonitorTable extends StatelessWidget {
       ),
     );
   }
+}
+
+TextStyle txtStyleHeader() {
+  return TextStyle(color: redColor, fontSize: 20);
 }
 
 TextStyle txtStyle() {
