@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
+import 'package:intl/intl.dart';
 
 import '../../constant.dart';
 
@@ -15,13 +16,21 @@ class Header extends StatelessWidget {
           width: 250,
         ),
         Spacer(flex: 2),
-        TimeCard(),
+        Text(
+          "Приемка",
+          style: TextStyle(fontSize: 50),
+        ),
+        Spacer(flex: 2),
+        TimeCard(context),
       ],
     );
   }
 }
 
-Container TimeCard() {
+Container TimeCard(context) {
+  var now = DateTime.now();
+  var formatter = DateFormat('dd/MM/yyyy').format(now);
+
   return Container(
     margin: const EdgeInsets.only(left: defaultPadding),
     padding: const EdgeInsets.symmetric(
@@ -39,6 +48,10 @@ Container TimeCard() {
           padding: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
           child: Column(
             children: [
+              Text(
+                formatter,
+                style: TextStyle(fontSize: 20),
+              ),
               DigitalClock(
                 digitAnimationStyle: Curves.easeInOutBack,
                 is24HourTimeFormat: true,
@@ -50,10 +63,10 @@ Container TimeCard() {
                 ),
                 hourMinuteDigitTextStyle: TextStyle(
                   color: Colors.white,
-                  fontSize: 50,
+                  fontSize: 35,
                 ),
                 secondDigitTextStyle:
-                    TextStyle(fontSize: 50, fontWeight: FontWeight.w200),
+                    TextStyle(fontSize: 35, fontWeight: FontWeight.w200),
               ),
             ],
           ),
