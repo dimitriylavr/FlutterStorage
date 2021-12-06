@@ -5,11 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'screen/main.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  MainScreen mainScreen = const MainScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: bgColor,
         canvasColor: secondaryColor,
       ),
-      home: MainScreen(),
+      home: mainScreen,
     );
   }
 }
